@@ -15,5 +15,5 @@ export const useMarkdownContent = () => {
         getFileData();
     }, []);
 
-    return [content];
+    return [content, setContent];
 }

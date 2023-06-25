@@ -1,14 +1,17 @@
 import * as React from "react";
 import { useMarkdownContent } from "../hooks/useMarkdownContent";
+import { EditorView } from "./editorView";
 
 const MarkdownRenderer = () => {
+
+    const [viewContext, setViewContext] = React.useState<'viewing' | 'editing'>('editing');
 
     const [markdownContent] = useMarkdownContent();
 
     const html = marked.parse(markdownContent);
     const cleanedHtml = DOMPurify.sanitize(html);
 
-    return <div dangerouslySetInnerHTML={{__html: cleanedHtml}} />;
+    return viewContext === "viewing" ? <div dangerouslySetInnerHTML={{__html: cleanedHtml}} /> : <EditorView html={cleanedHtml} />;
 
 };
 
