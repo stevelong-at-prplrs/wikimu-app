@@ -1,5 +1,5 @@
 {
-  "browser": "publicstatic/index.html",
+  "browser": "docs/index.html",
   "scripts": {
     "bundle": "webpack --config webpack-config.js --env=development",
     "start": "webpack-dev-server --config webpack-config.js --hot"
