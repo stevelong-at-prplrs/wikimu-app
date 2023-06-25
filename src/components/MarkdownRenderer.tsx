@@ -12,6 +12,7 @@ const MarkdownRenderer = () => {
     return (
         <>
             <div dangerouslySetInnerHTML={{__html: cleanedHtml}} />
+            <hr />
             <EditorView html={cleanedHtml} />
         </>);
 
