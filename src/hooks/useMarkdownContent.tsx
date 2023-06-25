@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const useMarkdownContent = () => {
+export const useMarkdownContent = (): [string, React.Dispatch<React.SetStateAction<string>>] => {
 
     const [content, setContent] = React.useState('');
 
@@ -12,7 +12,9 @@ export const useMarkdownContent = () => {
     }
 
     React.useEffect(() => {
-        getFileData();
+        if (!content) {
+            getFileData();
+        }
     }, []);
 
     return [content, setContent];
