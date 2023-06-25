@@ -1,0 +1,2 @@
+# wikimu-app
+smol wiki
