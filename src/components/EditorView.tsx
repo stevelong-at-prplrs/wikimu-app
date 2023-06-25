@@ -1,15 +1,20 @@
 import * as React from "react";
 import { Editor } from '@tinymce/tinymce-react';
 import { useMarkdownContent } from "../hooks/useMarkdownContent";
+import TurndownService from 'turndown'
+
 
 export const EditorView = ({html}: {html: string}) => {
-
+    
+    const turndownService = new TurndownService();
+    
     const [_markdownContent, setMarkdownContent] = useMarkdownContent();
-
     const editorRef = React.useRef(null);
+    
     const log = () => {
         if (editorRef.current) {
-        console.log(editorRef.current.getContent());
+            const markdown = turndownService.turndown(editorRef.current.getContent());
+            console.log(markdown);
         }
     };
     return (

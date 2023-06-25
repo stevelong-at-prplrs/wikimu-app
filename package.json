@@ -19,6 +19,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@tinymce/tinymce-react": "^4.3.0"
+    "@tinymce/tinymce-react": "^4.3.0",
+    "turndown": "^7.1.2"
   }
 }
