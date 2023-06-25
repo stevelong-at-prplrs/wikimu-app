@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useMarkdownContent } from "../hooks/useMarkdownContent";
-import { EditorView } from "./editorView";
+import { EditorView } from "./EditorView";
 
 const MarkdownRenderer = () => {
 

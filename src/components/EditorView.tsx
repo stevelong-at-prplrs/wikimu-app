@@ -2,6 +2,8 @@ import * as React from "react";
 import { Editor } from '@tinymce/tinymce-react';
 import { useMarkdownContent } from "../hooks/useMarkdownContent";
 import TurndownService from 'turndown'
+import * as fs from 'fs';
+
 
 
 export const EditorView = ({html}: {html: string}) => {
@@ -15,6 +17,12 @@ export const EditorView = ({html}: {html: string}) => {
         if (editorRef.current) {
             const markdown = turndownService.turndown(editorRef.current.getContent());
             console.log(markdown);
+            // fs.writeFile('../../docs/markdown/file1.md', markdown, err => {
+            //     if (err) {
+            //       console.error(err);
+            //     }
+            //     // file written successfully
+            //   });
         }
     };
     return (
