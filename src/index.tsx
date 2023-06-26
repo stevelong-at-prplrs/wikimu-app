@@ -2,4 +2,6 @@ import * as React from "react";
 import { createRoot } from 'react-dom/client';
 import { App } from "./app";
 
-createRoot(document.getElementById("app")).render(<App />);
+const docContext: 'viewing' | 'editing' = 'editing';
+const root = createRoot(document.getElementById("app"));
+root.render(<App docContext={docContext}/>);

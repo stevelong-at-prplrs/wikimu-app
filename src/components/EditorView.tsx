@@ -2,6 +2,7 @@ import * as React from "react";
 import { Editor } from '@tinymce/tinymce-react';
 import { useMarkdownContent } from "../hooks/useMarkdownContent";
 import TurndownService from 'turndown'
+import { updateSingleDocContent } from "../utils/api";
 
 export const EditorView = ({html}: {html: string}) => {
     
@@ -13,8 +14,9 @@ export const EditorView = ({html}: {html: string}) => {
     const log = () => {
         if (editorRef.current) {
             const markdown: string = turndownService.turndown(editorRef.current.getContent());
-            console.log(markdown); // TODO: call PUT or POST route of API to update
-            // setMarkdownContent(markdown);
+            // console.log(markdown); // TODO: call PUT or POST route of API to update
+            updateSingleDocContent(markdown);
+            setMarkdownContent(markdown);
         }
     };
     return (
