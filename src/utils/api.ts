@@ -35,7 +35,9 @@ export const updateSingleDocContent = (markdownStr: string) => {  // PUT update 
     const options = {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Method': 'PUT',
+        'Access-Control-Request-Headers': 'origin, x-requested-with',
       },
       body: JSON.stringify(data)
     };
