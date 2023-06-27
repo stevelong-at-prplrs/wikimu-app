@@ -4,7 +4,7 @@ import { useMarkdownContent } from "../hooks/useMarkdownContent";
 import TurndownService from 'turndown'
 import { updateSingleDocContent } from "../utils/api";
 
-export const EditorView = ({html}: {html: string}) => {
+export const EditDocument = ({html}: {html: string}) => {
     
     const turndownService = new TurndownService();
     

@@ -1,22 +1,43 @@
-export const FetchSingleDocContent = (setMarkdown: { (value: React.SetStateAction<string>): void; (arg0: any): void; }) => {
+export const FetchSingleDocContent = (setMarkdown: React.Dispatch<React.SetStateAction<string>>) => {
         
-    const apiUrl = '//localhost:3000/documents/6498a352835cd46dc03dbf76';
+  const apiUrl = '//localhost:3000/documents/6498a352835cd46dc03dbf76';
 
-    fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data?.content) {
-            setMarkdown(data.content);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+  fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data?.content) {
+          setMarkdown(data.content);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+};
+
+export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>) => {
+  const apiUrl = '//localhost:3000/documents/';
+  fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+.then(response => response.json())
+.then(data => {
+    if (data?.length > 0) {
+      setDocs(data);
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+
+
 };
 
 export const updateSingleDocContent = (markdownStr: string) => {  // PUT update document data
@@ -31,7 +52,7 @@ export const updateSingleDocContent = (markdownStr: string) => {  // PUT update 
         "title": "example-1"
     };
     
-    // // Fetch options
+    // Fetch options
     const options = {
       method: 'PUT',
       headers: {
