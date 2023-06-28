@@ -1,6 +1,6 @@
-export const FetchSingleDocContent = (setMarkdown: React.Dispatch<React.SetStateAction<string>>) => {
-        
-  const apiUrl = '//localhost:3000/documents/6498a352835cd46dc03dbf76';
+export const FetchSingleDocContent = (docId: string, setMarkdown: React.Dispatch<React.SetStateAction<string>>) => {
+
+  const apiUrl = '//localhost:3000/documents/' + docId;
 
   fetch(apiUrl, {
       method: 'GET',
@@ -40,9 +40,9 @@ export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>
 
 };
 
-export const updateSingleDocContent = (markdownStr: string) => {  // PUT update document data
+export const updateSingleDocContent = (docId: string, markdownStr: string) => {  // PUT update document data
     
-    const apiUrl = '//localhost:3000/documents/6498a352835cd46dc03dbf76';
+    const apiUrl = '//localhost:3000/documents/' + docId;
     
     // Data to be sent
     const data = {

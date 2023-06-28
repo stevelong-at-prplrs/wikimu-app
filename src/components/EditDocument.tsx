@@ -4,25 +4,24 @@ import { useMarkdownContent } from "../hooks/useMarkdownContent";
 import TurndownService from 'turndown'
 import { updateSingleDocContent } from "../utils/api";
 
-export const EditDocument = ({html}: {html: string}) => {
+export const EditDocument = ({html, docId}: {html: string, docId: string}) => {
     
     const turndownService = new TurndownService();
     
-    const [_markdownContent, setMarkdownContent] = useMarkdownContent();
+    const [_markdownContent, setMarkdownContent] = useMarkdownContent(docId);
     const editorRef = React.useRef(null);
     
     const log = () => {
         if (editorRef.current) {
             const markdown: string = turndownService.turndown(editorRef.current.getContent());
-            // console.log(markdown); // TODO: call PUT or POST route of API to update
-            updateSingleDocContent(markdown);
+            updateSingleDocContent(docId, markdown);
             setMarkdownContent(markdown);
         }
     };
     return (
         <>
             <Editor
-                apiKey='your-api-key'
+                // apiKey='your-api-key'
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue={html}
                 init={{
@@ -40,7 +39,7 @@ export const EditDocument = ({html}: {html: string}) => {
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                 }}
             />
-            <button onClick={log}>Convert to Markdown and Update</button>
+            <button onClick={log}>Convert to Markdown and Save</button>
         </>
     );
 }

@@ -10,16 +10,16 @@ import { ViewDocument } from "./components/ViewDocument";
 // const docContext: 'viewing' | 'editing' = params.has("editing") ? 'editing' : 'viewing'; // make this into a tab selector?
 // const [docContext, setDocContext] = React.useState('viewing');
 
-const docContext: 'viewing' | 'editing' = 'viewing';
+// const docContext: 'viewing' | 'editing' = 'viewing';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppRoot docContext={docContext} />,
+    element: <AppRoot />,
   },
   {
     path: "/:id",
-    element: <ViewDocument docContext={docContext} />
+    element: <ViewDocument />
   }
 ]);
 
