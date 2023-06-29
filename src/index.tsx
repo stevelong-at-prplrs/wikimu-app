@@ -1,10 +1,19 @@
 import * as React from "react";
 import { createRoot } from 'react-dom/client';
-import { App } from "./app";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AppRoot } from "./app-root";
+import { ViewDocument } from "./components/ViewDocument";
 
-const params = new URLSearchParams(window.location.search);
-const docContext: 'viewing' | 'editing' = params.has("editing") ? 'editing' : 'viewing'; // make this into a tab selector?
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppRoot />,
+  },
+  {
+    path: "/:id",
+    element: <ViewDocument />
+  }
+]);
+
 const root = createRoot(document.getElementById("app"));
-root.render(<App docContext={docContext}/>);
-
-// need a folder view of files
+root.render(<RouterProvider router={router} />);

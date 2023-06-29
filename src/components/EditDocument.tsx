@@ -1,30 +1,39 @@
 import * as React from "react";
 import { Editor } from '@tinymce/tinymce-react';
-import { useMarkdownContent } from "../hooks/useMarkdownContent";
 import TurndownService from 'turndown'
 import { updateSingleDocContent } from "../utils/api";
 
-export const EditorView = ({html}: {html: string}) => {
-    
+export const EditDocument = ({docContent, cleanedHtml, setDocContent, docId}) => {
+
+    const [title, setTitle] = React.useState(docContent?.title ?? "");
     const turndownService = new TurndownService();
-    
-    const [_markdownContent, setMarkdownContent] = useMarkdownContent();
     const editorRef = React.useRef(null);
     
-    const log = () => {
+    const save = () => {
         if (editorRef.current) {
             const markdown: string = turndownService.turndown(editorRef.current.getContent());
-            // console.log(markdown); // TODO: call PUT or POST route of API to update
-            updateSingleDocContent(markdown);
-            setMarkdownContent(markdown);
+            updateSingleDocContent({id: docId, content: markdown, title});
+            setDocContent({id: docId, content: markdown, title});
         }
     };
+
+    const updateTitle = () => {
+        if (title) {
+            updateSingleDocContent({id: docId, title});
+            setDocContent({title});
+        }
+    };
+
     return (
         <>
+            <br />
+            <label htmlFor="document-name">Document Title:</label>
+            <input type="text" id="document-name" name="document-name" value={title} onChange={(e) => setTitle(e.currentTarget.value)} placeholder="enter a title"/>
+            {title === docContent.title ? "" : <button onClick={() => updateTitle()}>Save Title</button>}
             <Editor
-                apiKey='your-api-key'
+                // apiKey='your-api-key'
                 onInit={(evt, editor) => editorRef.current = editor}
-                initialValue={html}
+                initialValue={cleanedHtml}
                 init={{
                     height: 500,
                     menubar: false,
@@ -40,7 +49,7 @@ export const EditorView = ({html}: {html: string}) => {
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                 }}
             />
-            <button onClick={log}>Convert to Markdown and Update</button>
+            <button onClick={save}>Save</button>
         </>
     );
 }

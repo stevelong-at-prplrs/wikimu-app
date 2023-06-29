@@ -1,5 +1,5 @@
 {
-  "browser": "docs/index.html",
+  "browser": "publicstatic/index.html",
   "scripts": {
     "bundle": "webpack --config webpack-config.js --env=development",
     "start": "webpack-dev-server --config webpack-config.js --hot"
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-react": "^4.3.0",
+    "react-router-dom": "^6.14.0",
     "turndown": "^7.1.2"
   }
 }

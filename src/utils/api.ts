@@ -1,37 +1,72 @@
-export const FetchSingleDocContent = (setMarkdown: { (value: React.SetStateAction<string>): void; (arg0: any): void; }) => {
-        
-    const apiUrl = '//localhost:3000/documents/6498a352835cd46dc03dbf76';
+export interface docInfo {
+  content?: string;
+  title?: string;
+  id?: string;
+  v?: number;
+}
 
-    fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data?.content) {
-            setMarkdown(data.content);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+export const FetchSingleDocContent = async (docId: string): Promise<docInfo> => {
+
+  const apiUrl = '//localhost:3000/documents/' + docId;
+
+  const result =  await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+  .then(response => response.json())
+  .then(data => {
+    // console.log({data})
+      if (data?.content || data?._id) {
+          // console.log("data.content:\t", data.content);
+          return({content: data.content, id: data._id, title: data.title});
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      return({});
+  });
+
+  return result ?? {};
 };
 
-export const updateSingleDocContent = (markdownStr: string) => {  // PUT update document data
+export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>) => {
+  const apiUrl = '//localhost:3000/documents/';
+  fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+.then(response => response.json())
+.then(data => {
+    if (data?.length > 0) {
+      setDocs(data);
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+
+
+};
+
+export const updateSingleDocContent = (docData) => {  // PUT update document data
     
-    const apiUrl = '//localhost:3000/documents/6498a352835cd46dc03dbf76';
+    const apiUrl = docData.id ? '//localhost:3000/documents/' + docData.id : undefined;
+
+    if (!apiUrl) return;
     
     // Data to be sent
     const data = {
-        "_id": "6498a352835cd46dc03dbf76",
+        "_id": docData.id,
         "__v": 1,
-        "content": markdownStr,
-        "title": "example-1"
+        "content": docData.content,
+        "title": docData.title
     };
     
-    // // Fetch options
+    // Fetch options
     const options = {
       method: 'PUT',
       headers: {
