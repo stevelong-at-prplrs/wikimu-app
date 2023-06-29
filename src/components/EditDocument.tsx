@@ -1,37 +1,33 @@
 import * as React from "react";
 import { Editor } from '@tinymce/tinymce-react';
-// import { useMarkdownContent } from "../hooks/useMarkdownContent";
 import TurndownService from 'turndown'
 import { updateSingleDocContent } from "../utils/api";
 
-export const EditDocument = ({docContent, cleanedHtml, setMarkdownContent, docId}) => {
+export const EditDocument = ({docContent, cleanedHtml, setDocContent, docId}) => {
 
-    // console.log({docContent});
-    
-    const turndownService = new TurndownService();
-    
-    // const [_markdownContent, setMarkdownContent] = useMarkdownContent(docId);
     const [title, setTitle] = React.useState(docContent?.title ?? "");
+    const turndownService = new TurndownService();
     const editorRef = React.useRef(null);
     
     const save = () => {
         if (editorRef.current) {
             const markdown: string = turndownService.turndown(editorRef.current.getContent());
             updateSingleDocContent({id: docId, content: markdown, title});
-            setMarkdownContent({id: docId, content: markdown});
+            setDocContent({id: docId, content: markdown});
         }
     };
 
     const updateTitle = () => {
         if (title) {
             updateSingleDocContent({id: docId, title});
-            setMarkdownContent({title});
+            setDocContent({title});
         }
     };
 
     return (
         <>
-            <label htmlFor="document-name">Document Name:</label>
+            <br />
+            <label htmlFor="document-name">Document Title:</label>
             <input type="text" id="document-name" name="document-name" value={title} onChange={(e) => setTitle(e.currentTarget.value)} placeholder="enter a title"/>
             {title === docContent.title ? "" : <button onClick={() => updateTitle()}>Save Title</button>}
             <Editor
