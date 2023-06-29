@@ -1,14 +1,16 @@
 import * as React from "react";
-import { FetchSingleDocContent } from "../utils/api";
+import { FetchSingleDocContent, docInfo } from "../utils/api";
 
-export const useMarkdownContent = (docId: string): [string, React.Dispatch<React.SetStateAction<string>>] => {
+export const useMarkdownContent = (docId: string): [docInfo, React.Dispatch<React.SetStateAction<docInfo>>] => {
 
-    const [content, setContent] = React.useState('');
+    const [content, setContent] = React.useState<docInfo>();
 
     React.useEffect(() => {
-        if (!content) {
-            FetchSingleDocContent(docId, setContent);
-        }
+
+        (async () => {
+            if (!content) {
+            setContent(await FetchSingleDocContent(docId));
+        }})()
     }, []);
 
     return [content, setContent];

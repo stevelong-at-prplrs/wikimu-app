@@ -1,8 +1,15 @@
-export const FetchSingleDocContent = (docId: string, setMarkdown: React.Dispatch<React.SetStateAction<string>>) => {
+export interface docInfo {
+  content?: string;
+  title?: string;
+  id?: string;
+  v?: number;
+}
+
+export const FetchSingleDocContent = async (docId: string): Promise<docInfo> => {
 
   const apiUrl = '//localhost:3000/documents/' + docId;
 
-  fetch(apiUrl, {
+  const result =  await fetch(apiUrl, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
@@ -10,13 +17,18 @@ export const FetchSingleDocContent = (docId: string, setMarkdown: React.Dispatch
   })
   .then(response => response.json())
   .then(data => {
-      if (data?.content) {
-          setMarkdown(data.content);
+    // console.log({data})
+      if (data?.content && data?._id) {
+          // console.log("data.content:\t", data.content);
+          return({content: data.content, id: data._id, title: data.title});
       }
   })
   .catch(error => {
       console.error('Error:', error);
+      return({});
   });
+
+  return result ?? {};
 };
 
 export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>) => {
@@ -40,16 +52,18 @@ export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>
 
 };
 
-export const updateSingleDocContent = (docId: string, markdownStr: string) => {  // PUT update document data
+export const updateSingleDocContent = (docData) => {  // PUT update document data
     
-    const apiUrl = '//localhost:3000/documents/' + docId;
+    const apiUrl = docData.id ? '//localhost:3000/documents/' + docData.id : undefined;
+
+    if (!apiUrl) return;
     
     // Data to be sent
     const data = {
-        "_id": "6498a352835cd46dc03dbf76",
+        "_id": docData.id,
         "__v": 1,
-        "content": markdownStr,
-        "title": "example-1"
+        "content": docData.content,
+        "title": docData.title
     };
     
     // Fetch options
