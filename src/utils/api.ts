@@ -18,7 +18,7 @@ export const FetchSingleDocContent = async (docId: string): Promise<docInfo> => 
   .then(response => response.json())
   .then(data => {
     // console.log({data})
-      if (data?.content && data?._id) {
+      if (data?.content || data?._id) {
           // console.log("data.content:\t", data.content);
           return({content: data.content, id: data._id, title: data.title});
       }

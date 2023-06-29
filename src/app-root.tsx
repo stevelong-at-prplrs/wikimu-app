@@ -12,5 +12,12 @@ export const AppRoot = () => {
         }
     }, []);
 
-    return docs.length > 0 ? <>{docs.map((doc, index) => <React.Fragment key={index}>{index > 0 && <br />}<Link key={index} to={"/" + doc._id}>{doc.title || doc._id}</Link></React.Fragment>)}</> : <>No docs found</>;
+    return docs.length > 0 ?
+        <>{docs.map((doc, index) => 
+            <React.Fragment key={index}>{index > 0 && <br />}
+                <Link key={index} to={"/" + doc._id}>{doc.title || "untitled"}</Link>
+                <span>{" "}{doc.content ? doc.content.length > 25 ? doc.content.substring(0, 24) + "..." : doc.content : ""}</span>
+            </React.Fragment>)}
+        </>
+        : <>No docs found</>;
 }

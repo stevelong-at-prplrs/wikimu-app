@@ -1,13 +1,16 @@
 import * as React from "react";
-import { useDocInfo } from "../hooks/useMarkdownContent";
+import { useDocumentInfo } from "../hooks/useDocumentInfo";
 import { EditDocument } from "./EditDocument";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export const ViewDocument = () => {
 
+    const navigate = useNavigate();
+    const navigateBackHome = () => navigate(-1);
+
     const { id } = useParams();
-    const [docData, setDocData] = useDocInfo(id);
+    const [docData, setDocData] = useDocumentInfo(id);
 
     const [docContext, setDocContext] = React.useState<'viewing' | 'editing'>('viewing');
 
@@ -16,8 +19,16 @@ export const ViewDocument = () => {
 
     return (
     <>
+        <button onClick={() => navigateBackHome()}>←</button>
+        {" "}
         <button onClick={() => setDocContext('viewing')}>View</button>
         <button onClick={() => setDocContext('editing')}>Edit</button>
-        {docContext === 'viewing' ? <><h4>{docData?.title || "untitled"}</h4><div dangerouslySetInnerHTML={{__html: cleanedHtml ?? ""}} /></> : <EditDocument docId={id} setDocContent={setDocData} docContent={docData} cleanedHtml={cleanedHtml} />}
+        {docContext === 'viewing' ? 
+            <>
+                <h4>{docData?.title || "untitled"}</h4>
+                <div dangerouslySetInnerHTML={{__html: cleanedHtml ?? ""}} />
+            </>
+        :
+            <EditDocument docId={id} docContent={docData} setDocContent={setDocData} cleanedHtml={cleanedHtml} />}
     </>);
 }

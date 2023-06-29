@@ -10,7 +10,7 @@ module.exports = {
     hot: true,
     port: 9000,
     static: {
-      directory: path.join(__dirname, 'docs'),
+      directory: path.join(__dirname, 'publicstatic'),
     }
   },
   mode: isDevelopment ? 'development' : 'production',
@@ -34,7 +34,7 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'docs')
+    path: path.resolve(__dirname, 'publicstatic')
   },
   plugins: [isDevelopment && new ReactRefreshWebpackPlugin()].filter(Boolean),
   resolve: {
