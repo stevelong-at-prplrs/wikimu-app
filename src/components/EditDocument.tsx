@@ -12,7 +12,7 @@ export const EditDocument = ({docContent, cleanedHtml, setDocContent, docId}) =>
     const save = () => {
         if (editorRef.current) {
             const markdown: string = turndownService.turndown(editorRef.current.getContent());
-            updateSingleDocContent({id: docId, content: markdown, title});
+            updateSingleDocContent({id: docId, content: markdown, title, v: docContent.v});
             setDocContent({id: docId, content: markdown, title});
         }
     };

@@ -5,6 +5,25 @@ export interface docInfo {
   v?: number;
 }
 
+export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>) => {
+  const apiUrl = '//localhost:3000/documents/';
+  fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data?.length > 0) {
+      setDocs(data);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+};
+
 export const FetchSingleDocContent = async (docId: string): Promise<docInfo> => {
 
   const apiUrl = '//localhost:3000/documents/' + docId;
@@ -20,7 +39,7 @@ export const FetchSingleDocContent = async (docId: string): Promise<docInfo> => 
     // console.log({data})
       if (data?.content || data?._id) {
           // console.log("data.content:\t", data.content);
-          return({content: data.content, id: data._id, title: data.title});
+          return({content: data.content, id: data._id, title: data.title, v: data.__v});
       }
   })
   .catch(error => {
@@ -31,28 +50,7 @@ export const FetchSingleDocContent = async (docId: string): Promise<docInfo> => 
   return result ?? {};
 };
 
-export const FetchDocuments = (setDocs: React.Dispatch<React.SetStateAction<[]>>) => {
-  const apiUrl = '//localhost:3000/documents/';
-  fetch(apiUrl, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-.then(response => response.json())
-.then(data => {
-    if (data?.length > 0) {
-      setDocs(data);
-    }
-})
-.catch(error => {
-    console.error('Error:', error);
-});
-
-
-};
-
-export const updateSingleDocContent = (docData) => {  // PUT update document data
+export const updateSingleDocContent = (docData: docInfo) => {  // PUT update document data
     
     const apiUrl = docData.id ? '//localhost:3000/documents/' + docData.id : undefined;
 
@@ -61,7 +59,7 @@ export const updateSingleDocContent = (docData) => {  // PUT update document dat
     // Data to be sent
     const data = {
         "_id": docData.id,
-        "__v": 1,
+        "__v": (docData.v ?? 0) + 1,
         "content": docData.content,
         "title": docData.title
     };
