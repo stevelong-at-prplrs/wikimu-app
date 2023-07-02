@@ -11,7 +11,9 @@ export const EditDocument = ({docContent, cleanedHtml, setDocContent, docId}) =>
     
     const save = () => {
         if (editorRef.current) {
-            const markdown: string = turndownService.turndown(editorRef.current.getContent());
+            const htmlContent = editorRef.current.getContent();
+            const processedHtmlContent = htmlContent.replaceAll('<pre>', '<pre><code>').replaceAll('</pre>', '</code></pre>'); // turndown won't turn preformatted text into a markdown code block without a code tag wrapping the content as well as the pre tag.
+            const markdown: string = turndownService.turndown(processedHtmlContent);
             updateSingleDocContent({id: docId, content: markdown, title, v: docContent.v});
             setDocContent({id: docId, content: markdown, title});
         }
