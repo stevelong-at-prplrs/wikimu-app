@@ -29,6 +29,6 @@ export const ViewDocument = () => {
                 <div dangerouslySetInnerHTML={{__html: cleanedHtml ?? ""}} />
             </>
         :
-            <EditDocument docId={id} docContent={docData} setDocContent={setDocData} cleanedHtml={cleanedHtml} />}
+            <EditDocument docId={id} docContent={docData} setDocContent={setDocData} />}
     </>);
 }

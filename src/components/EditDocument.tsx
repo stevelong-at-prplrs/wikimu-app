@@ -1,22 +1,14 @@
 import * as React from "react";
-import { Editor } from '@tinymce/tinymce-react';
-import TurndownService from 'turndown'
 import { updateSingleDocContent } from "../utils/api";
 
-export const EditDocument = ({docContent, cleanedHtml, setDocContent, docId}) => {
+export const EditDocument = ({docContent, setDocContent, docId}) => {
 
     const [title, setTitle] = React.useState(docContent?.title ?? "");
-    const turndownService = new TurndownService();
-    const editorRef = React.useRef(null);
-    
+    const [content, setContent] = React.useState(docContent?.content ?? "");
+
     const save = () => {
-        if (editorRef.current) {
-            const htmlContent = editorRef.current.getContent();
-            const processedHtmlContent = htmlContent.replaceAll('<pre>', '<pre><code>').replaceAll('</pre>', '</code></pre>'); // turndown won't turn preformatted text into a markdown code block without a code tag wrapping the content as well as the pre tag.
-            const markdown: string = turndownService.turndown(processedHtmlContent);
-            updateSingleDocContent({id: docId, content: markdown, title, v: docContent.v});
-            setDocContent({id: docId, content: markdown, title});
-        }
+        updateSingleDocContent({id: docId, content, title, v: docContent.v});
+        setDocContent({id: docId, content, title});
     };
 
     const updateTitle = () => {
@@ -27,31 +19,13 @@ export const EditDocument = ({docContent, cleanedHtml, setDocContent, docId}) =>
     };
 
     return (
-        <>
+        <div style={{ display: "flex", flexDirection: "column" }}>
             <br />
-            <label htmlFor="document-name">Document Title:</label>
             <input type="text" id="document-name" name="document-name" value={title} onChange={(e) => setTitle(e.currentTarget.value)} placeholder="enter a title"/>
+            <br />
             {title === docContent.title ? "" : <button onClick={() => updateTitle()}>Save Title</button>}
-            <Editor
-                // apiKey='your-api-key'
-                onInit={(evt, editor) => editorRef.current = editor}
-                initialValue={cleanedHtml}
-                init={{
-                    height: 500,
-                    menubar: false,
-                    plugins: [
-                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                    ],
-                    toolbar: 'undo redo | blocks | ' +
-                    'bold italic forecolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat | help',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                }}
-            />
-            <button onClick={save}>Save</button>
-        </>
+            <textarea rows={40} value={content} onChange={(e) => setContent(e.currentTarget.value)}></textarea>
+            <button style={{ width: "fit-content" }} onClick={save}>Save</button>
+        </div>
     );
 }
