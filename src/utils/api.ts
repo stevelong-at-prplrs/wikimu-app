@@ -57,7 +57,7 @@ export const updateSingleDocContent = (docData: docInfo) => {  // PUT update doc
     // Data to be sent
     const data = {
         "_id": docData.id,
-        "__v": (docData.v ?? 0) + 1,
+        "__v": docData.content ? (docData.v ?? 0) + 1 : docData.v ?? 0,
         "content": docData.content,
         "title": docData.title
     };
@@ -87,4 +87,35 @@ export const updateSingleDocContent = (docData: docInfo) => {  // PUT update doc
       .catch(error => {
         console.error('Error writing data via PUT:', error);
       });
+};
+
+export const deleteSingleDocContent = (docId: string) => {  // DELETE document data
+  const apiUrl = '//localhost:3000/documents/' + docId;
+
+  return fetch(apiUrl, {
+      method: 'DELETE',
+      headers: {
+          'Access-Control-Request-Method': 'DELETE'
+      },
+  })
+  .then(response => response)
+  .then(data => data)
+  .catch(error => {
+    console.error('Error:', error);
+  });
+};
+
+export const createNewDoc = () => {  // POST create new document
+  const apiUrl = '//localhost:3000/documents/';
+  return fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => data)
+  .catch(error => {
+    console.error('Error:', error);
+  });
 };

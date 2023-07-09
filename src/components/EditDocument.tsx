@@ -6,14 +6,14 @@ export const EditDocument = ({docContent, setDocContent, docId}) => {
     const [title, setTitle] = React.useState(docContent?.title ?? "");
     const [content, setContent] = React.useState(docContent?.content ?? "");
 
-    const updateDocContentAndVersion = () => {
-        updateSingleDocContent({id: docId, content, v: docContent.v});
-        setDocContent({id: docId, content});
+    const updateDocContentTitleAndVersion = () => {
+        updateSingleDocContent({id: docId, content, title, v: docContent.v});
+        setDocContent({id: docId, content, title});
     };
 
     const updateTitle = () => {
         if (title) {
-            updateSingleDocContent({id: docId, title});
+            updateSingleDocContent({id: docId, title, v: docContent.v});
             setDocContent({title});
         }
     };
@@ -29,7 +29,7 @@ export const EditDocument = ({docContent, setDocContent, docId}) => {
             <br />
             <textarea rows={40} value={content} onChange={(e) => setContent(e.currentTarget.value)}></textarea>
             <br />
-            <button disabled={content===docContent.content} style={{ width: "fit-content" }} onClick={updateDocContentAndVersion}>Save</button>
+            <button disabled={content===docContent.content} style={{ width: "fit-content" }} onClick={updateDocContentTitleAndVersion}>Save</button>
         </div>
     );
 }
