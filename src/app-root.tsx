@@ -15,16 +15,19 @@ export const AppRoot = () => {
     return <>
     {docs.length > 0 ?
         docs.map((doc, index) => 
-            <React.Fragment key={index}>{index > 0 && <br />}
-                <Link key={index} to={"/" + doc._id}>{doc.title || "untitled"}</Link>
-                <span> (v{doc.__v}) {doc.content ? doc.content.length > 25 ? doc.content.substring(0, 24) + "..." : doc.content : ""}</span>
-                {" "}
-                <button onClick={() => deleteDoc(doc._id)}>delete</button>
-                {" "}
-                <button onClick={() => console.log(duplicateDoc(doc._id))}>duplicate</button>
-                {" "}
-                <button onClick={() => downloadButton(doc.content || "", doc.title || doc._id)}>download</button>
-            </React.Fragment>)
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", overflow: "hidden", flexWrap: "nowrap" }} key={index}>
+                <span style={{ textWrap: "nowrap", overflow: "hidden", "text-overflow": "ellipsis" } /* the type system is not adequate currently but this error will disapear when this inline style is moved to stylesheet */}>
+                    <Link key={index} to={"/" + doc._id}>{doc.title || "untitled"}</Link>
+                    <span> (v{doc.__v}) {doc.content ? doc.content.length > 25 ? doc.content.substring(0, 24) + "..." : doc.content : ""}</span>
+                </span>
+                <div style={{ whiteSpace: "nowrap" }}>
+                    <button onClick={() => deleteDoc(doc._id)}>delete</button>
+                    {" "}
+                    <button onClick={() => console.log(duplicateDoc(doc._id))}>duplicate</button>
+                    {" "}
+                    <button onClick={() => downloadButton(doc.content || "", doc.title || doc._id)}>download</button>
+                </div>
+            </div>)
         : <>No docs found</>}
         <br />
         <button onClick={() => createDoc()}>Add new doc</button>
