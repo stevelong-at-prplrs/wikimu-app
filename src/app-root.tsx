@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { FetchDocuments, createDoc, deleteDoc } from "./utils/api";
+import { FetchDocuments, createDoc, deleteDoc, duplicateDoc } from "./utils/api";
 import { downloadButton } from "./utils/download";
 export const AppRoot = () => {
 
@@ -21,7 +21,7 @@ export const AppRoot = () => {
                 {" "}
                 <button onClick={() => deleteDoc(doc._id)}>delete</button>
                 {" "}
-                <button onClick={() => console.log("duplicate")}>duplicate</button>
+                <button onClick={() => console.log(duplicateDoc(doc._id))}>duplicate</button>
                 {" "}
                 <button onClick={() => downloadButton(doc.content || "", doc.title || doc._id)}>download</button>
             </React.Fragment>)

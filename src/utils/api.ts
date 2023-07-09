@@ -120,6 +120,23 @@ export const createNewDoc = () => {  // POST create new document
   });
 };
 
+export const DuplicateSingleDoc = (docId: string) => {  // POST create new document
+
+  const apiUrl = '//localhost:3000/documents/' + docId + '/duplicate';
+
+  return fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => data)
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  }
+
 export const deleteDoc = async (id: string) => {
   const response = await deleteSingleDocContent(id);
   if (response && response.status === 200) {
@@ -132,4 +149,11 @@ export const createDoc = async () => {
   if (response._id) {
       window.location.reload(); // TODO: replace with a state update to avoid a full page reload. Update document list by adding successfully created doc to state.
   }
+};
+
+export const duplicateDoc = async (id: string) => {
+  const response = await DuplicateSingleDoc(id);
+  if (response._id) {
+    window.location.reload(); // TODO: replace with a state update to avoid a full page reload. Update document list by adding successfully created doc to state.
+}
 };
