@@ -16,6 +16,18 @@ const createDoc = async () => {
     }
 };
 
+const downloadButton = (fileContent: string, filename: string) => { // TODO: move to utils
+    // is there a better way to do this? React-specific way?
+    const blob = new Blob([fileContent], {type: "text/plain;charset=utf-8"});
+    const fileDownloadUrl = URL.createObjectURL(blob);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = fileDownloadUrl;
+    downloadLink.download = filename;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+};
+
 export const AppRoot = () => {
 
     const [docs, setDocs] = React.useState([]);
@@ -34,6 +46,10 @@ export const AppRoot = () => {
                 <span> (v{doc.__v}) {doc.content ? doc.content.length > 25 ? doc.content.substring(0, 24) + "..." : doc.content : ""}</span>
                 {" "}
                 <button onClick={() => deleteDoc(doc._id)}>delete</button>
+                {" "}
+                <button onClick={() => console.log("duplicate")}>duplicate</button>
+                {" "}
+                <button onClick={() => downloadButton(doc.content || "", doc.title || doc._id)}>download</button>
             </React.Fragment>)
         : <>No docs found</>}
         <br />
