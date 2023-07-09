@@ -119,3 +119,17 @@ export const createNewDoc = () => {  // POST create new document
     console.error('Error:', error);
   });
 };
+
+export const deleteDoc = async (id: string) => {
+  const response = await deleteSingleDocContent(id);
+  if (response && response.status === 200) {
+      window.location.reload(); // TODO: replace with a state update to avoid a full page reload. Update document list by removing successfully deleted doc from state.
+  }
+};
+
+export const createDoc = async () => {
+  const response = await createNewDoc();
+  if (response._id) {
+      window.location.reload(); // TODO: replace with a state update to avoid a full page reload. Update document list by adding successfully created doc to state.
+  }
+};
