@@ -41,24 +41,26 @@ export const AppRoot = () => {
             </div>)
         : <>No docs found</>}
         {/* {showMenu && <ContextMenu top={menuPosition.y} left={menuPosition.x} />} */}
+        {showMenu && <ContextMenu top={menuPosition.y} left={menuPosition.x} />}
         <br />
         <button onClick={() => createDoc()}>Add new doc</button>
         </>;
 }
 
-// const ContextMenu = ({ top, left }) =>           <div
-// style={{
-//   position: 'absolute',
-//   top,
-//   left,
-//   backgroundColor: 'white',
-//   boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-//   padding: '5px',
-// }}
-// >
-// {/* Context menu content */}
-// <div>move</div>
-// <div>delete</div>
-// <div>duplicate</div>
-// <div>download</div>
-// </div>
+
+const ContextMenu = ({ top, left }) =>           <div
+style={{
+  position: 'absolute',
+  top,
+  left,
+  backgroundColor: 'white',
+  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+  padding: '5px',
+}}
+>
+{/* Context menu content */}
+<div>move</div>
+<div>delete</div>
+<div>duplicate</div>
+<div>download</div>
+</div>
