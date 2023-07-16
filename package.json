@@ -1,22 +1,40 @@
 {
+  "name": "wikimu-app",
+  "version": "1.0.0",
+  "description": "micro wiki UI",
+  "main": "src/index.tsx",
+  "repository": "https://github.com/stevelong-at-prplrs/wikimu-app.git",
+  "author": "Steve Long <stevelong@prpl.rs>",
+  "license": "MIT",
   "browser": "publicstatic/index.html",
   "scripts": {
     "bundle": "webpack --config webpack-config.js --env=development",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
     "start": "webpack-dev-server --config webpack-config.js --hot"
   },
   "dependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.45.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-refresh": "^0.14.0",
     "react-refresh-typescript": "^2.0.7",
     "react-router-dom": "^6.14.0",
+    "style-loader": "^3.3.3",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",
-    "webpack": "^5.75.0",
+    "webpack": "^5.88.1",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
+  },
+  "devDependencies": {
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.2"
   }
 }
