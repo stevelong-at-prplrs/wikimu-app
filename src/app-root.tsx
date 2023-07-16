@@ -2,7 +2,9 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { FetchDocuments, createDoc, deleteDoc, duplicateDoc } from "./utils/api";
 import { downloadButton } from "./utils/download";
-import ContextMenu from "./components/ContextMenu";
+// import ContextMenu from "./components/ContextMenu";
+import "./scss/style.scss";
+
 export const AppRoot = () => {
 
     const [docs, setDocs] = React.useState([]);
@@ -38,25 +40,25 @@ export const AppRoot = () => {
                 </div>
             </div>)
         : <>No docs found</>}
-        {showMenu && <ContextMenu top={menuPosition.y} left={menuPosition.x} />}
+        {/* {showMenu && <ContextMenu top={menuPosition.y} left={menuPosition.x} />} */}
         <br />
         <button onClick={() => createDoc()}>Add new doc</button>
         </>;
 }
 
-const ContextMenu = ({ top, left }) =>           <div
-style={{
-  position: 'absolute',
-  top,
-  left,
-  backgroundColor: 'white',
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-  padding: '5px',
-}}
->
-{/* Context menu content */}
-<div>move</div>
-<div>delete</div>
-<div>duplicate</div>
-<div>download</div>
-</div>
+// const ContextMenu = ({ top, left }) =>           <div
+// style={{
+//   position: 'absolute',
+//   top,
+//   left,
+//   backgroundColor: 'white',
+//   boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+//   padding: '5px',
+// }}
+// >
+// {/* Context menu content */}
+// <div>move</div>
+// <div>delete</div>
+// <div>duplicate</div>
+// <div>download</div>
+// </div>
