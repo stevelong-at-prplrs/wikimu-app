@@ -10,9 +10,9 @@ const ContextMenu = () => {
     setMenuPosition({ x: e.clientX, y: e.clientY });
   };
 
-  const handleMenuClose = () => {
-    setShowMenu(false);
-  };
+  // const handleMenuClose = () => {
+  //   setShowMenu(false);
+  // };
 
   return (
     <div onContextMenu={handleContextMenu}>

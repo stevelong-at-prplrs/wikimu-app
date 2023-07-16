@@ -10,13 +10,22 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/strict-boolean-expressions": [
             1,
             {
-                "allowString" : false,
-                "allowNumber" : false
+                "allowString": true,
+                "allowNumber": true,
+                "allowNullableObject": true,
+                "allowNullableBoolean": false,
+                "allowNullableString": true,
+                "allowNullableNumber": false,
+                "allowNullableEnum": false,
+                "allowAny": false,
+                "allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing": false
             }
-        ]
+        ],
+        "@typescript-eslint/no-unnecessary-condition": "warn"
     },
     "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
 }

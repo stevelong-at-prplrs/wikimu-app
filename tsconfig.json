@@ -14,6 +14,8 @@
         "declaration": false,
         "jsx": "react",
         "baseUrl": ".",
+        "noImplicitAny": true,
+        "strictNullChecks": true
     },
     "include": ["./src", "."]
 }
